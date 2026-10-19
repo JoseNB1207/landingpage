@@ -2,6 +2,16 @@
 <html lang="es">
 
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TWWB73P5');</script>
+  <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ORBITAL — Vive la Experiencia SpaceX en Tiempo Real</title>
@@ -20,6 +30,10 @@
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWWB73P5" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- animated starfield canvas -->
   <canvas id="starsCanvas"></canvas>
@@ -257,47 +271,21 @@
         </div>
 
         <div class="cta-right">
-          <form class="cta-form" id="ctaForm" novalidate aria-label="Registro de Pase de Tripulante">
+          <div class="cta-form hubspot-form-container">
             <div class="form-tag">
               <span class="led" aria-hidden="true"></span>
               PASE DE ABORDAJE A LA EXPERIENCIA
             </div>
 
-            <div class="field">
-              <label for="f-name" class="field-label">_nombre_del_tripulante</label>
-              <input type="text" id="f-name" name="name" class="field-input" placeholder="Elon o tu nombre..."
-                autocomplete="name" required />
+            <div class="hubspot-form-wrapper">
+              <script src="https://js.hsforms.net/forms/embed/52189561.js" defer></script>
+              <div class="hs-form-frame" data-region="na1" data-form-id="3963295b-aaea-4d9b-a5d0-726249de3ee2" data-portal-id="52189561"></div>
             </div>
-
-            <div class="field">
-              <label for="f-email" class="field-label">_email_para_alertas_de_despegue</label>
-              <input type="email" id="f-email" name="email" class="field-input" placeholder="tripulante@mision.com"
-                autocomplete="email" required />
-            </div>
-
-            <div class="field">
-              <label for="f-use" class="field-label">_mision_que_mas_te_apasiona</label>
-              <select id="f-use" name="mission" class="field-input field-select" required>
-                <option value="" disabled selected>Elige tu misión favorita...</option>
-                <option value="starship">Starship y el viaje a Marte</option>
-                <option value="starlink">Tren de satélites Starlink sobre mi ciudad</option>
-                <option value="crew">Misiones tripuladas Crew Dragon a la ISS</option>
-                <option value="falcon">Aterrizajes de Falcon Heavy y Falcon 9</option>
-                <option value="all">Todas las misiones sin excepción</option>
-              </select>
-            </div>
-
-            <button type="submit" class="btn-acid btn-submit" id="cta-submit-btn">
-              <span>OBTENER MI PASE Y ENTRAR A LA APP</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
-              </svg>
-            </button>
 
             <p class="form-fine">
               Al unirte formas parte de la tripulación ORBITAL. Sin spam, solo pasión por el espacio.
             </p>
-          </form>
+          </div>
         </div>
 
       </div>
