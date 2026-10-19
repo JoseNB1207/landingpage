@@ -495,7 +495,6 @@ function showToast(msg) {
 
   // Trigger buttons
   const triggers = [
-    document.getElementById('hero-launch-app-btn'),
     document.getElementById('nav-cta-btn'),
     document.getElementById('panelLaunchTrigger'),
     document.getElementById('step-open-app-btn'),
