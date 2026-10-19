@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORBITAL — Vive la Experiencia SpaceX en Tiempo Real</title>
+  <meta name="description"
+    content="La aplicación web interactiva para vivir los lanzamientos de SpaceX en directo. Sigue telemetría 3D, el enjambre Starlink sobre tu ciudad y siente la emoción del despegue." />
+  <meta property="og:title" content="ORBITAL — Experiencia Espacial SpaceX en Vivo" />
+  <meta property="og:description"
+    content="Siente la emoción de cada despegue espacial en tiempo real. Visualiza satélites Starlink en órbita y la flota Falcon desde tu navegador." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- animated starfield canvas -->
+  <canvas id="starsCanvas"></canvas>
+
+  <!-- cinematic noise & scanlines overlay -->
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+
+  <!-- ═══ 1. HEADER ═══ -->
+  <header id="header" class="header" role="banner">
+    <div class="header-inner">
+      <a href="#hero" class="logo" aria-label="ORBITAL Inicio">
+        <span class="logo-bracket" aria-hidden="true">[</span>ORBIT<span class="logo-accent">AL</span><span
+          class="logo-bracket" aria-hidden="true">]</span>
+      </a>
+
+      <div class="header-status" aria-label="Estado de la misión" role="status">
+        <span class="led" aria-hidden="true"></span>
+        <span class="status-text" id="headerStatus">MISIÓN ONLINE · EN ÓRBITA</span>
+      </div>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#beneficios" class="nav-item">_experiencia</a>
+        <a href="#explicacion" class="nav-item">_simulador</a>
+        <a href="#testimonios" class="nav-item">_comunidad</a>
+        <a href="#faq" class="nav-item">_faq</a>
+        <a href="#appModal" class="nav-cta" id="nav-cta-btn">ABRIR APP EN VIVO ↗</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="#beneficios" class="mob-link">_experiencia</a>
+      <a href="#explicacion" class="mob-link">_simulador</a>
+      <a href="#testimonios" class="mob-link">_comunidad</a>
+      <a href="#faq" class="mob-link">_faq</a>
+      <a href="#appModal" class="mob-cta">LANZAR APP EN VIVO ↗</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══ 2. HERO ═══ -->
+    <section id="hero" class="hero" aria-labelledby="hero-h1">
+      <div class="hero-img-wrap" aria-hidden="true">
+        <img src="hero_bg.jpg" alt="Planeta Tierra desde el espacio con atmósfera brillante y estrellas"
+          class="hero-img" />
+        <div class="hero-img-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- lateral telemetry ticker -->
+      <div class="hero-ticker" aria-hidden="true">
+        <span class="ticker-text">ORBITAL EXPERIENCE — LIVE SPACEX DATA TELEMETRY — SIENTE EL DESPEGUE EN VIVO — T-MINUS
+          ACTIVE — ORBITAL EXPERIENCE — LIVE SPACEX DATA TELEMETRY — SIENTE EL DESPEGUE EN VIVO — </span>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="led" aria-hidden="true"></span>
+          EN VIVO · <span id="liveCount">342</span> misiones orbitales exploradas
+        </div>
+
+        <h1 id="hero-h1" class="hero-title">
+          <span class="ht-line1">VIVE</span>
+          <span class="ht-line2">SPACEX</span>
+          <span class="ht-line3">EN <em>DIRECTO</em></span>
+        </h1>
+
+        <div class="hero-meta">
+          <p class="hero-copy">
+            No leas sobre el espacio: siéntelo en tiempo real.<br />
+            Telemetría 3D de lanzamientos, el enjambre de satélites Starlink orbitando la Tierra y el rugido de los
+            motores Raptor directamente en tu pantalla.
+          </p>
+          <div class="hero-actions">
+            <button class="btn-acid" id="hero-launch-app-btn" aria-haspopup="dialog">
+              <span>ENTRAR A LA EXPERIENCIA</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </button>
+            <a href="#explicacion" class="btn-ghost" id="hero-demo-btn">
+              VER CÓMO FUNCIONA ↓
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Mission Control Panel -->
+      <div class="hero-panel" aria-label="Misión activa en telemetría">
+        <div class="panel-header">
+          <span class="panel-label">TELEMETRÍA EN TIEMPO REAL</span>
+          <span class="panel-dot" aria-hidden="true"></span>
+        </div>
+        <div class="panel-body" id="lastLaunchPanel">
+          <div class="panel-row">
+            <span class="pr-key">ÚLTIMA MISIÓN</span>
+            <span class="pr-val" id="lp-name">Starlink Mission</span>
+          </div>
+          <div class="panel-row">
+            <span class="pr-key">ESTADO DE VUELO</span>
+            <span class="pr-val" id="lp-status">✓ EN ÓRBITA</span>
+          </div>
+          <div class="panel-row">
+            <span class="pr-key">FECHA DE DESPEGUE</span>
+            <span class="pr-val" id="lp-date">—</span>
+          </div>
+          <div class="panel-row">
+            <span class="pr-key">VEHÍCULO</span>
+            <span class="pr-val" id="lp-rocket">Falcon 9 Block 5</span>
+          </div>
+        </div>
+        <div class="panel-endpoint">
+          <button class="panel-app-trigger" id="panelLaunchTrigger">
+            <span>EXPLORAR EN EL RADAR 3D ↗</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- big background ghost number -->
+      <div class="hero-number" aria-hidden="true">342</div>
+    </section>
+
+    <!-- ═══ 3. BENEFICIOS / EXPERIENCIA ═══ -->
+    <section id="beneficios" class="benefits" aria-labelledby="ben-heading">
+      <div class="container">
+
+        <div class="section-eyebrow">
+          <span class="eyebrow-num">/ 01</span>
+          <span class="eyebrow-text">LA EXPERIENCIA</span>
+        </div>
+
+        <h2 id="ben-heading" class="section-h2">
+          El cosmos en tus manos.<br />Sin intermediarios.
+        </h2>
+
+        <div class="ben-grid">
+
+          <div class="ben-item reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">01</div>
+            <div class="ben-body">
+              <h3>Telemetría de Lanzamiento en Vivo</h3>
+              <p>Velocidad Mach, altitud exacta y encendido de etapas en tiempo real durante cada despegue hacia la
+                órbita.</p>
+            </div>
+          </div>
+
+          <div class="ben-item reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">02</div>
+            <div class="ben-body">
+              <h3>El Tren de Satélites Starlink</h3>
+              <p>Rastrea la constelación sobrevolando tu propia ciudad con un mapa 3D interactivo en tiempo real.</p>
+            </div>
+          </div>
+
+          <div class="ben-item reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">03</div>
+            <div class="ben-body">
+              <h3>Aterrizajes en Barcaza en el Océano</h3>
+              <p>Revive la adrenalina de los propulsores Falcon 9 y Starship aterrizando verticalmente sobre barcazas
+                autónomas.</p>
+            </div>
+          </div>
+
+          <div class="ben-item reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">04</div>
+            <div class="ben-body">
+              <h3>Cabina de Astronautas Crew Dragon</h3>
+              <p>Conoce los parámetros vitales, acoplamiento con la Estación Espacial Internacional y trayectoria de
+                reentrada.</p>
+            </div>
+          </div>
+
+          <div class="ben-item reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">05</div>
+            <div class="ben-body">
+              <h3>Alertas de Despegue a tu Dispositivo</h3>
+              <p>Recibe una señal minutos antes de que el motor ruge y comience la cuenta regresiva oficial T-00:00:00.
+              </p>
+            </div>
+          </div>
+
+          <div class="ben-item ben-item--cta reveal" tabindex="0">
+            <div class="ben-num" aria-hidden="true">→</div>
+            <div class="ben-body">
+              <h3>100% Gratuito en tu Navegador</h3>
+              <p>Sin descargas pesadas ni registros forzados. Diseñado para vivirse en tu teléfono, tablet o computador.
+              </p>
+              <a href="#cta" class="inline-cta">Obtener mi Pase de Abordaje →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- interactive modes strip -->
+        <div class="endpoints-strip reveal" aria-label="Modos interactivos de la aplicación">
+          <div class="ep-label">MODOS EN LA APP</div>
+          <div class="ep-list" role="list">
+            <code role="listitem">● RADAR 3D STARLINK</code>
+            <code role="listitem">● CABINA DRAGON</code>
+            <code role="listitem">● TELEMETRÍA EN VIVO</code>
+            <code role="listitem">● HISTÓRICO DE MISIONES</code>
+            <code role="listitem">● ALERTAS T-MINUS</code>
+            <code role="listitem">● COHETES STARSHIP</code>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ 4. CTA 1 (PASE DE TRIPULANTE) ═══ -->
+    <section id="cta" class="cta-section" aria-labelledby="cta-heading">
+      <div class="container cta-grid">
+
+        <div class="cta-left">
+          <div class="section-eyebrow">
+            <span class="eyebrow-num">/ 02</span>
+            <span class="eyebrow-text">ACCESO DE TRIPULACIÓN</span>
+          </div>
+          <h2 id="cta-heading" class="cta-title">
+            Tu pase al<br />
+            espacio.<br />
+            En 30 seg.
+          </h2>
+          <ul class="cta-list" role="list">
+            <li><span aria-hidden="true">✦</span> Acceso ilimitado a la aplicación en vivo</li>
+            <li><span aria-hidden="true">✦</span> Alertas antes de cada lanzamiento de Starship y Falcon</li>
+            <li><span aria-hidden="true">✦</span> Avisos cuando Starlink sea visible sobre tu cielo nocturno</li>
+            <li><span aria-hidden="true">✦</span> Transmisiones con telemetría sincronizada en 4K</li>
+            <li><span aria-hidden="true">✦</span> Completamente gratuito para todos los entusiastas</li>
+          </ul>
+        </div>
+
+        <div class="cta-right">
+          <form class="cta-form" id="ctaForm" novalidate aria-label="Registro de Pase de Tripulante">
+            <div class="form-tag">
+              <span class="led" aria-hidden="true"></span>
+              PASE DE ABORDAJE A LA EXPERIENCIA
+            </div>
+
+            <div class="field">
+              <label for="f-name" class="field-label">_nombre_del_tripulante</label>
+              <input type="text" id="f-name" name="name" class="field-input" placeholder="Elon o tu nombre..."
+                autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="f-email" class="field-label">_email_para_alertas_de_despegue</label>
+              <input type="email" id="f-email" name="email" class="field-input" placeholder="tripulante@mision.com"
+                autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="f-use" class="field-label">_mision_que_mas_te_apasiona</label>
+              <select id="f-use" name="mission" class="field-input field-select" required>
+                <option value="" disabled selected>Elige tu misión favorita...</option>
+                <option value="starship">Starship y el viaje a Marte</option>
+                <option value="starlink">Tren de satélites Starlink sobre mi ciudad</option>
+                <option value="crew">Misiones tripuladas Crew Dragon a la ISS</option>
+                <option value="falcon">Aterrizajes de Falcon Heavy y Falcon 9</option>
+                <option value="all">Todas las misiones sin excepción</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-acid btn-submit" id="cta-submit-btn">
+              <span>OBTENER MI PASE Y ENTRAR A LA APP</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </button>
+
+            <p class="form-fine">
+              Al unirte formas parte de la tripulación ORBITAL. Sin spam, solo pasión por el espacio.
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ 5. EXPLICACIÓN (CÓMO FUNCIONA) ═══ -->
+    <section id="explicacion" class="explanation" aria-labelledby="exp-heading">
+      <div class="container">
+
+        <div class="section-eyebrow">
+          <span class="eyebrow-num">/ 03</span>
+          <span class="eyebrow-text">CÓMO VIVIR LA EXPERIENCIA</span>
+        </div>
+
+        <h2 id="exp-heading" class="section-h2">
+          De tu pantalla a la órbita<br />en 3 pasos
+        </h2>
+
+        <div class="steps">
+
+          <div class="step reveal">
+            <div class="step-marker">
+              <span class="step-n">01</span>
+              <span class="step-line" aria-hidden="true"></span>
+            </div>
+            <div class="step-body">
+              <h3 class="step-title">Inicia la aplicación en cualquier pantalla</h3>
+              <p class="step-desc">Abre la app web en tu móvil, tablet o laptop. La aplicación se conecta
+                automáticamente con la red en vivo de SpaceX para sincronizar la telemetría actual.</p>
+
+              <!-- Live Simulated Mission Telemetry Display -->
+              <div class="code-block" aria-label="Simulador de telemetría de misión">
+                <div class="cb-header">
+                  <span>TELEMETRÍA ORBITAL EN VIVO</span>
+                  <span class="cb-copy" aria-hidden="true">SENSORES ACTIVOS</span>
+                </div>
+                <pre><code><span class="t-dim">[ESTADO]</span> <span class="t-green">PROPULSIÓN NOMINAL — T+00:02:45</span>
+<span class="t-dim">[VELOCIDAD]</span> <span class="t-white">7,850 km/h (Mach 6.4)</span>
+<span class="t-dim">[ALTITUD]</span>   <span class="t-white">82.4 km — ESTRATÓSFERA</span>
+<span class="t-dim">[ETAPA 1]</span>   <span class="t-accent">SEPARACIÓN CONFIRMADA · EN RUTA A BARCAZA</span></code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step reveal">
+            <div class="step-marker">
+              <span class="step-n">02</span>
+              <span class="step-line" aria-hidden="true"></span>
+            </div>
+            <div class="step-body">
+              <h3 class="step-title">Elige qué parte de la misión quieres ver</h3>
+              <p class="step-desc">Alterna entre la vista 3D del globo terráqueo, los satélites Starlink en órbita baja,
+                o la cámara simulada del despegue y regreso del booster.</p>
+
+              <div class="built-with" aria-label="Vistas disponibles en la aplicación">
+                <div class="bw-item">
+                  <div class="bw-dot" aria-hidden="true"></div>
+                  <span>Globo 3D interactivo con rotación terrestre en tiempo real</span>
+                </div>
+                <div class="bw-item">
+                  <div class="bw-dot" aria-hidden="true"></div>
+                  <span>Rastreador de visibilidad Starlink según tu ubicación</span>
+                </div>
+                <div class="bw-item">
+                  <div class="bw-dot" aria-hidden="true"></div>
+                  <span>Conteo T-Minus con audio oficial de Mission Control</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step reveal">
+            <div class="step-marker">
+              <span class="step-n">03</span>
+            </div>
+            <div class="step-body">
+              <h3 class="step-title">Siente el despegue como si estuvieras en Cabo Cañaveral</h3>
+              <p class="step-desc">Recibe la notificación justo antes de que los motores rujan, mira los parámetros
+                exactos y celebra con una comunidad de miles de fanáticos de la era multiplanetaria.</p>
+
+              <div style="margin-top:20px">
+                <button class="btn-acid" id="step-open-app-btn">
+                  <span>PROBAR LA APP AHORA</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 6. TESTIMONIOS ═══ -->
+    <section id="testimonios" class="testimonials" aria-labelledby="test-heading">
+      <div class="container">
+
+        <div class="section-eyebrow">
+          <span class="eyebrow-num">/ 04</span>
+          <span class="eyebrow-text">COMUNIDAD DE EXPLORADORES</span>
+        </div>
+
+        <h2 id="test-heading" class="section-h2">Miles de miradas<br />apuntando al cielo</h2>
+
+        <div class="test-grid">
+
+          <article class="test-card reveal" tabindex="0">
+            <div class="test-stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="test-quote">
+              "Ver el tren de satélites Starlink pasar exactamente a la hora que marcaba la app sobre mi casa fue una
+              experiencia mágica para mis hijos."
+            </blockquote>
+            <footer class="test-foot">
+              <span class="test-init" aria-hidden="true">MR</span>
+              <div>
+                <cite class="test-name">Matías R.</cite>
+                <span class="test-role">Aficionado de la astronomía · Chile</span>
+              </div>
+            </footer>
+          </article>
+
+          <article class="test-card test-card--big reveal" tabindex="0">
+            <div class="test-stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="test-quote">
+              "Durante el despegue de Starship tenía la transmisión en la tele y la app de ORBITAL en mi tablet con la
+              telemetría. Sentí que estaba sentado en la sala de control de Hawthorne."
+            </blockquote>
+            <footer class="test-foot">
+              <span class="test-init" aria-hidden="true">SK</span>
+              <div>
+                <cite class="test-name">Sofía K.</cite>
+                <span class="test-role">Divulgadora científica · España</span>
+              </div>
+            </footer>
+          </article>
+
+          <article class="test-card reveal" tabindex="0">
+            <div class="test-stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="test-quote">
+              "Las alertas nunca fallan. Ya no me pierdo ningún lanzamiento de Falcon 9 aunque esté trabajando; la app
+              me avisa 10 minutos antes con el link directo."
+            </blockquote>
+            <footer class="test-foot">
+              <span class="test-init" aria-hidden="true">JP</span>
+              <div>
+                <cite class="test-name">Javier P.</cite>
+                <span class="test-role">Entusiasta espacial · México</span>
+              </div>
+            </footer>
+          </article>
+
+        </div>
+
+        <div class="used-by reveal">
+          <span class="ub-label">UTILIZADO POR COMUNIDADES Y FANS DE</span>
+          <div class="ub-row" aria-hidden="true">
+            <span>SPACEX WATCHERS</span>
+            <span class="ub-sep" aria-hidden="true">/</span>
+            <span>STARLINK HUNTERS</span>
+            <span class="ub-sep" aria-hidden="true">/</span>
+            <span>ASTRONOMÍA LATAM</span>
+            <span class="ub-sep" aria-hidden="true">/</span>
+            <span>MARS SOCIETY</span>
+            <span class="ub-sep" aria-hidden="true">/</span>
+            <span>ORBIT CLUB</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ 7. CTA 2 ═══ -->
+    <section class="cta2" aria-labelledby="cta2-heading">
+      <div class="container">
+        <div class="cta2-inner">
+          <div class="cta2-left">
+            <span class="cta2-kicker">/ 05 · EN VIVO</span>
+            <h2 id="cta2-heading" class="cta2-title">
+              50,000+ exploradores<br />
+              ya en órbita.
+            </h2>
+          </div>
+          <div class="cta2-right">
+            <p class="cta2-desc">
+              El próximo cohete ya está en la plataforma.<br />
+              Conéctate a la cabina y no te pierdas el rugido del motor.
+            </p>
+            <div class="cta2-actions">
+              <button class="btn-acid" id="cta2-main-btn">
+                <span>LANZAR LA APP GRATIS</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </button>
+              <a href="#cta" class="btn-ghost" id="cta2-docs-btn">
+                ACTIVAR ALERTAS DE LANZAMIENTO
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- stats marquee bar -->
+        <div class="stats-bar" aria-label="Estadísticas de la experiencia">
+          <div class="stats-track" aria-hidden="true">
+            <span>340+ MISIONES REGISTRADAS</span>
+            <span class="stat-sep">◆</span>
+            <span>TELEMETRÍA SATELITAL EN VIVO</span>
+            <span class="stat-sep">◆</span>
+            <span>100% GRATIS Y SIN INSTALACIONES</span>
+            <span class="stat-sep">◆</span>
+            <span>50,000+ EXPLORADORES ACTIVOS</span>
+            <span class="stat-sep">◆</span>
+            <span>340+ MISIONES REGISTRADAS</span>
+            <span class="stat-sep">◆</span>
+            <span>TELEMETRÍA SATELITAL EN VIVO</span>
+            <span class="stat-sep">◆</span>
+            <span>100% GRATIS Y SIN INSTALACIONES</span>
+            <span class="stat-sep">◆</span>
+            <span>50,000+ EXPLORADORES ACTIVOS</span>
+            <span class="stat-sep">◆</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 8. FAQ ═══ -->
+    <section id="faq" class="faq" aria-labelledby="faq-heading">
+      <div class="container faq-grid">
+
+        <div class="faq-left">
+          <div class="section-eyebrow">
+            <span class="eyebrow-num">/ 06</span>
+            <span class="eyebrow-text">PREGUNTAS FRECUENTES</span>
+          </div>
+          <h2 id="faq-heading" class="section-h2">
+            Antes del<br />
+            despegue.
+          </h2>
+          <p class="faq-sub">
+            ¿Tienes alguna otra pregunta? <a href="#cta" class="faq-link">Únete a la tripulación</a> y te ayudamos al
+            instante.
+          </p>
+        </div>
+
+        <div class="faq-list">
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q1" aria-expanded="false" aria-controls="a1">
+              <span>¿Qué es la aplicación ORBITAL?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a1" hidden>
+              Es una aplicación web interactiva que te permite seguir en tiempo real todos los lanzamientos, satélites y
+              misiones espaciales de SpaceX con modelos 3D, telemetría de vuelo y alertas automáticas.
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q2" aria-expanded="false" aria-controls="a2">
+              <span>¿Tengo que pagar o instalar algún programa?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a2" hidden>
+              No, absolutamente nada. Es 100% gratuita y funciona directamente en cualquier navegador (Chrome, Safari,
+              Edge, Firefox) tanto en teléfonos móviles como en computadoras y tablets.
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q3" aria-expanded="false" aria-controls="a3">
+              <span>¿De dónde provienen los datos y la telemetría?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a3" hidden>
+              La aplicación está conectada directamente con los feeds públicos oficiales y verificados de SpaceX,
+              permitiéndote ver los nombres de misiones, estados de éxito, fechas exactas y parámetros de cada cohete.
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q4" aria-expanded="false" aria-controls="a4">
+              <span>¿Puedo ver cuándo pasarán los satélites Starlink sobre mi casa?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a4" hidden>
+              Sí, la herramienta de rastreo orbital calcula la visibilidad nocturna de los satélites en tu zona horaria
+              para que puedas salir al patio y ver el tren de luces brillantes en el cielo.
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q5" aria-expanded="false" aria-controls="a5">
+              <span>¿La app me avisa antes de que despegue un cohete?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a5" hidden>
+              Sí, puedes activar las alertas para recibir un recordatorio antes del encendido de motores de cada misión
+              de Falcon 9, Falcon Heavy o Starship.
+            </div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-q" id="q6" aria-expanded="false" aria-controls="a6">
+              <span>¿Está pensada para niños y estudiantes?</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a" id="a6" hidden>
+              Totalmente. Toda la interfaz es visual, atractiva y educativa. Es ideal para estudiantes, familias y
+              cualquier persona fascinada por la conquista del cosmos.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 9. PRE-FOOTER ═══ -->
+    <section class="prefooter" aria-labelledby="pf-heading">
+      <div class="container pf-inner">
+        <div class="pf-text">
+          <div class="section-eyebrow">
+            <span class="eyebrow-num">/ 07</span>
+            <span class="eyebrow-text">CUENTA REGRESIVA FINAL</span>
+          </div>
+          <h2 id="pf-heading" class="pf-title">
+            El cosmos<br />
+            no espera.
+          </h2>
+        </div>
+        <div class="pf-form-wrap">
+          <p class="pf-copy">
+            Activa tus alertas para el próximo despegue.<br />
+            Sé el primero en ver los motores rugir hacia el cielo.
+          </p>
+          <form class="pf-form" id="pfForm" novalidate aria-label="Alerta rápida de lanzamiento">
+            <div class="pf-row">
+              <label for="pf-email" class="visually-hidden">Tu email para alertas</label>
+              <input type="email" id="pf-email" name="email" class="pf-input" placeholder="tu@correo.com"
+                autocomplete="email" required />
+              <button type="submit" class="btn-acid" id="pf-btn">
+                DESPEGAR
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </button>
+            </div>
+          </form>
+          <div class="pf-metrics">
+            <div class="pm">
+              <span class="pm-val">342</span>
+              <span class="pm-key">Lanzamientos</span>
+            </div>
+            <div class="pm">
+              <span class="pm-val">50K+</span>
+              <span class="pm-key">Exploradores</span>
+            </div>
+            <div class="pm">
+              <span class="pm-val">100%</span>
+              <span class="pm-key">Gratuito</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ 10. FOOTER ═══ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="logo" aria-label="ORBITAL">
+            <span class="logo-bracket">[</span>ORBIT<span class="logo-accent">AL</span><span
+              class="logo-bracket">]</span>
+          </a>
+          <p class="footer-desc">
+            La experiencia interactiva para vivir la era espacial de SpaceX.<br />
+            Datos reales. Emoción en vivo. El futuro multiplanetario.
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navegación del pie de página">
+          <div class="fcol">
+            <h4 class="fcol-title">_experiencia</h4>
+            <a href="#beneficios" class="flink">Características</a>
+            <a href="#explicacion" class="flink">Cómo funciona</a>
+            <a href="#cta" class="flink">Pase de tripulante</a>
+            <a href="#appModal" class="flink" id="footerAppTrigger">Simulador en vivo ↗</a>
+          </div>
+          <div class="fcol">
+            <h4 class="fcol-title">_misiones</h4>
+            <a href="https://api.spacexdata.com/v5/launches/latest" target="_blank" rel="noopener" class="flink">Última
+              misión ↗</a>
+            <a href="#beneficios" class="flink">Radar Starlink</a>
+            <a href="#testimonios" class="flink">Comunidad</a>
+            <a href="#faq" class="flink">FAQ</a>
+          </div>
+          <div class="fcol">
+            <h4 class="fcol-title">_legal</h4>
+            <a href="#" class="flink">Privacidad</a>
+            <a href="#" class="flink">Términos de servicio</a>
+            <a href="#cta" class="flink">Contacto</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 ORBITAL Experience — Proyecto no oficial dedicado a la divulgación espacial.
+          Datos provistos por la API comunitaria de SpaceX.</span>
+        <div class="footer-sys">
+          <span class="led led--sm" aria-hidden="true"></span>
+          TODOS LOS SISTEMAS NOMINALES
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ MODAL INTERACTIVO DE LA APP (SIMULADOR EN VIVO) ═══ -->
+  <div class="app-modal" id="appModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="led" aria-hidden="true"></span>
+          <span class="modal-title" id="modalTitle">ORBITAL MISSION COCKPIT — MODO EN VIVO</span>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Cerrar simulador">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="sim-hud">
+          <div class="sim-screen">
+            <div class="sim-crosshair" aria-hidden="true"></div>
+            <div class="sim-orbit-visual">
+              <div class="sim-earth-globe">
+                <div class="sim-atmosphere"></div>
+                <div class="sim-satellite" title="Satélite en órbita">🛰</div>
+                <div class="sim-satellite-track"></div>
+              </div>
+            </div>
+            <div class="sim-overlay-info">
+              <span class="sim-tag">ORBITA: LEO (550 KM)</span>
+              <span class="sim-tag" id="simLiveStatus">TELEMETRÍA: ACTIVA</span>
+              <span class="sim-tag">INCLINACIÓN: 53.2°</span>
+            </div>
+          </div>
+          <div class="sim-telemetry-panel">
+            <h4 class="sim-telemetry-title">PARÁMETROS DE MISIÓN EN TIEMPO REAL</h4>
+            <div class="sim-grid">
+              <div class="sim-card">
+                <span class="sc-label">VELOCIDAD ORBITAL</span>
+                <span class="sc-val" id="simSpeed">27,600 km/h</span>
+                <span class="sc-sub">Mach 22.5</span>
+              </div>
+              <div class="sim-card">
+                <span class="sc-label">ALTITUD ACTUAL</span>
+                <span class="sc-val" id="simAltitude">542 km</span>
+                <span class="sc-sub">Órbita baja terrestre</span>
+              </div>
+              <div class="sim-card">
+                <span class="sc-label">ESTADO DEL BOOSTER</span>
+                <span class="sc-val" style="color:var(--cyan-bright)">RECUPERADO</span>
+                <span class="sc-sub">Barcaza "A Shortfall of Gravitas"</span>
+              </div>
+              <div class="sim-card">
+                <span class="sc-label">PRÓXIMO PASE STARLINK</span>
+                <span class="sc-val" id="simPass">21:42 Local</span>
+                <span class="sc-sub">Cielo despejado estimado</span>
+              </div>
+            </div>
+
+            <div class="sim-actions">
+              <a href="#cta" class="btn-acid" id="simRegisterBtn">
+                <span>ACTIVAR MIS ALERTAS DE DESPEGUE</span>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </a>
+              <button class="btn-ghost" id="simSoundBtn">
+                <span>SONIDO DE MISIÓN: ACTIVADO 🔊</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de Notificación -->
+  <div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true">
+    <span class="led" aria-hidden="true"></span>
+    <span id="toastMsg">¡PASE CONFIRMADO! Bienvenido a la tripulación.</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
