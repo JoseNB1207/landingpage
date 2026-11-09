@@ -48,8 +48,8 @@
     content="Telemetría 3D de Falcon 9 y Starship, rastreador de satélites Starlink y alertas de despegue. App web gratuita." />
   <meta name="twitter:image" content="https://josenb1207.github.io/landingpage/hero_bg.jpg" />
 
-  <!-- ═══ Performance: Preload LCP image ═══ -->
-  <link rel="preload" as="image" href="hero_bg.jpg" fetchpriority="high" />
+  <!-- ═══ Performance: Preload LCP image (WebP) ═══ -->
+  <link rel="preload" as="image" href="hero_bg.webp" fetchpriority="high" type="image/webp" />
 
   <!-- ═══ Performance: Google Fonts non-blocking ═══ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,11 +57,11 @@
   <link
     rel="preload"
     as="style"
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600&family=Bebas+Neue&family=Inter:wght@400;600&family=Orbitron:wght@700;900&display=swap"
     onload="this.onload=null;this.rel='stylesheet'" />
   <noscript>
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600&family=Bebas+Neue&family=Inter:wght@400;600&family=Orbitron:wght@700;900&display=swap"
       rel="stylesheet" />
   </noscript>
 
@@ -183,12 +183,12 @@
   </style>
 
   <!-- ═══ Performance: Preload main script ═══ -->
-  <link rel="preload" href="script.js" as="script" />
+  <link rel="preload" href="script.min.js" as="script" />
 
   <!-- ═══ Favicon ═══ -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>" />
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.min.css" />
 </head>
 
 <body>
@@ -244,8 +244,11 @@
     <!-- ═══ 2. HERO ═══ -->
     <section id="hero" class="hero" aria-labelledby="hero-h1">
       <div class="hero-img-wrap" aria-hidden="true">
-        <img src="hero_bg.jpg" alt="Planeta Tierra desde el espacio con atmósfera brillante y estrellas — ORBITAL SpaceX"
-          class="hero-img" width="1920" height="1080" fetchpriority="high" decoding="async" />
+        <picture>
+          <source srcset="hero_bg.webp" type="image/webp" />
+          <img src="hero_bg.jpg" alt="Planeta Tierra desde el espacio con atmósfera brillante y estrellas — ORBITAL SpaceX"
+            class="hero-img" width="1920" height="1080" fetchpriority="high" decoding="sync" />
+        </picture>
         <div class="hero-img-overlay" aria-hidden="true"></div>
       </div>
 
@@ -920,7 +923,7 @@
     <span id="toastMsg">¡PASE CONFIRMADO! Bienvenido a la tripulación.</span>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="script.min.js" defer></script>
   <!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/52189561.js"></script>
   <!-- End of HubSpot Embed Code -->
