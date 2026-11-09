@@ -14,18 +14,180 @@
   <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ORBITAL — Vive la Experiencia SpaceX en Tiempo Real</title>
+
+  <!-- ═══ SEO: Primary Meta Tags ═══ -->
+  <title>ORBITAL — Vive los Lanzamientos SpaceX en Tiempo Real | Telemetría Starlink en Vivo</title>
   <meta name="description"
-    content="La aplicación web interactiva para vivir los lanzamientos de SpaceX en directo. Sigue telemetría 3D, el enjambre Starlink sobre tu ciudad y siente la emoción del despegue." />
-  <meta property="og:title" content="ORBITAL — Experiencia Espacial SpaceX en Vivo" />
-  <meta property="og:description"
-    content="Siente la emoción de cada despegue espacial en tiempo real. Visualiza satélites Starlink en órbita y la flota Falcon desde tu navegador." />
+    content="ORBITAL: la app web gratuita para seguir lanzamientos SpaceX en vivo. Telemetría 3D de Falcon 9 y Starship, rastreador de satélites Starlink sobre tu ciudad y alertas de despegue. Sin instalación." />
+  <meta name="keywords"
+    content="SpaceX en vivo, lanzamientos SpaceX, telemetría Falcon 9, satélites Starlink, Starship en directo, seguimiento orbital, alertas de despegue, aplicación espacial gratuita" />
+  <meta name="author" content="ORBITAL Experience" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- ═══ SEO: Canonical URL ═══ -->
+  <link rel="canonical" href="https://josenb1207.github.io/landingpage/" />
+
+  <!-- ═══ SEO: Open Graph / Facebook ═══ -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josenb1207.github.io/landingpage/" />
+  <meta property="og:title" content="ORBITAL — Lanzamientos SpaceX en Vivo | Telemetría Starlink" />
+  <meta property="og:description"
+    content="Sigue cada despegue de Falcon 9 y Starship con telemetría 3D en tiempo real. Rastrea satélites Starlink sobre tu ciudad. 100% gratuito, sin instalación." />
+  <meta property="og:image" content="https://josenb1207.github.io/landingpage/hero_bg.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Planeta Tierra desde el espacio con atmósfera brillante — ORBITAL App" />
+  <meta property="og:site_name" content="ORBITAL Experience" />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- ═══ SEO: Twitter Card ═══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@orbital_spacex" />
+  <meta name="twitter:title" content="ORBITAL — Lanzamientos SpaceX en Vivo" />
+  <meta name="twitter:description"
+    content="Telemetría 3D de Falcon 9 y Starship, rastreador de satélites Starlink y alertas de despegue. App web gratuita." />
+  <meta name="twitter:image" content="https://josenb1207.github.io/landingpage/hero_bg.jpg" />
+
+  <!-- ═══ Performance: Preload LCP image ═══ -->
+  <link rel="preload" as="image" href="hero_bg.jpg" fetchpriority="high" />
+
+  <!-- ═══ Performance: Google Fonts non-blocking ═══ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
+    rel="preload"
+    as="style"
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&display=swap"
-    rel="stylesheet" />
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&display=swap"
+      rel="stylesheet" />
+  </noscript>
+
+  <!-- ═══ SEO: Structured Data (JSON-LD) ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://josenb1207.github.io/landingpage/#website",
+        "url": "https://josenb1207.github.io/landingpage/",
+        "name": "ORBITAL Experience",
+        "description": "Aplicación web gratuita para seguir lanzamientos SpaceX en vivo con telemetría 3D y rastreador de satélites Starlink",
+        "inLanguage": "es",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://josenb1207.github.io/landingpage/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://josenb1207.github.io/landingpage/#app",
+        "name": "ORBITAL — Vive SpaceX en Directo",
+        "url": "https://josenb1207.github.io/landingpage/",
+        "description": "Aplicación web gratuita e interactiva para seguir lanzamientos de SpaceX en tiempo real: telemetría 3D de Falcon 9 y Starship, rastreador de satélites Starlink, alertas de despegue y cabina Crew Dragon.",
+        "applicationCategory": "EntertainmentApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Telemetría de lanzamiento en vivo",
+          "Rastreador de satélites Starlink",
+          "Aterrizajes de barcaza Falcon 9",
+          "Cabina Crew Dragon",
+          "Alertas de despegue",
+          "Globo 3D interactivo"
+        ],
+        "screenshot": "https://josenb1207.github.io/landingpage/hero_bg.jpg",
+        "inLanguage": "es"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://josenb1207.github.io/landingpage/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Qué es la aplicación ORBITAL?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Es una aplicación web interactiva que te permite seguir en tiempo real todos los lanzamientos, satélites y misiones espaciales de SpaceX con modelos 3D, telemetría de vuelo y alertas automáticas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Tengo que pagar o instalar algún programa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No, absolutamente nada. Es 100% gratuita y funciona directamente en cualquier navegador (Chrome, Safari, Edge, Firefox) tanto en teléfonos móviles como en computadoras y tablets."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿De dónde provienen los datos y la telemetría?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La aplicación está conectada directamente con los feeds públicos oficiales y verificados de SpaceX, permitiéndote ver los nombres de misiones, estados de éxito, fechas exactas y parámetros de cada cohete."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Puedo ver cuándo pasarán los satélites Starlink sobre mi casa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, la herramienta de rastreo orbital calcula la visibilidad nocturna de los satélites en tu zona horaria para que puedas salir al patio y ver el tren de luces brillantes en el cielo."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿La app me avisa antes de que despegue un cohete?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, puedes activar las alertas para recibir un recordatorio antes del encendido de motores de cada misión de Falcon 9, Falcon Heavy o Starship."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Está pensada para niños y estudiantes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Totalmente. Toda la interfaz es visual, atractiva y educativa. Es ideal para estudiantes, familias y cualquier persona fascinada por la conquista del cosmos."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- ═══ Performance: Critical CSS inline (above-the-fold) ═══ -->
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--space-black:#02040a;--space-dark:#040817;--white:#f8fafc;--text-primary:#e2e8f0;--font-body:'Inter',sans-serif;--font-display:'Bebas Neue',sans-serif;--font-orbit:'Orbitron',monospace;--blue:#3b82f6;--cyan:#00f2fe;--grad-primary:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);--pad-x:clamp(20px,5vw,72px)}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background-color:var(--space-black);color:var(--text-primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+    .hero-img-wrap{position:absolute;inset:0;z-index:0}
+    .hero-img{width:100%;height:100%;object-fit:cover}
+    .hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,4,10,.55) 0%,rgba(2,4,10,.85) 100%)}
+    .header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px var(--pad-x)}
+    .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+
+  <!-- ═══ Performance: Preload main script ═══ -->
+  <link rel="preload" href="script.js" as="script" />
+
+  <!-- ═══ Favicon ═══ -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -82,8 +244,8 @@
     <!-- ═══ 2. HERO ═══ -->
     <section id="hero" class="hero" aria-labelledby="hero-h1">
       <div class="hero-img-wrap" aria-hidden="true">
-        <img src="hero_bg.jpg" alt="Planeta Tierra desde el espacio con atmósfera brillante y estrellas"
-          class="hero-img" />
+        <img src="hero_bg.jpg" alt="Planeta Tierra desde el espacio con atmósfera brillante y estrellas — ORBITAL SpaceX"
+          class="hero-img" width="1920" height="1080" fetchpriority="high" decoding="async" />
         <div class="hero-img-overlay" aria-hidden="true"></div>
       </div>
 
@@ -108,7 +270,7 @@
         <div class="hero-meta">
           <p class="hero-copy">
             No leas sobre el espacio: siéntelo en tiempo real.<br />
-            Telemetría 3D de lanzamientos, el enjambre de satélites Starlink orbitando la Tierra y el rugido de los
+            Telemetría 3D de lanzamientos Falcon 9 y Starship, el enjambre de satélites Starlink orbitando la Tierra y el rugido de los
             motores Raptor directamente en tu pantalla.
           </p>
           <div class="hero-actions">
@@ -164,7 +326,7 @@
         </div>
 
         <h2 id="ben-heading" class="section-h2">
-          El cosmos en tus manos.<br />Sin intermediarios.
+          Sigue lanzamientos SpaceX en vivo.<br />Sin intermediarios.
         </h2>
 
         <div class="ben-grid">
@@ -673,8 +835,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span class="footer-copy">© 2026 ORBITAL Experience — Proyecto no oficial dedicado a la divulgación espacial.
-          Datos provistos por la API comunitaria de SpaceX.</span>
+        <span class="footer-copy">© 2026 ORBITAL Experience — Proyecto de divulgación espacial no oficial. Datos provistos por la <a href="https://github.com/r-spacex/SpaceX-API" rel="noopener noreferrer" target="_blank" class="flink">API comunitaria de SpaceX (r/SpaceX)</a>. Este sitio no tiene afiliación con Space Exploration Technologies Corp.</span>
         <div class="footer-sys">
           <span class="led led--sm" aria-hidden="true"></span>
           TODOS LOS SISTEMAS NOMINALES
@@ -759,7 +920,7 @@
     <span id="toastMsg">¡PASE CONFIRMADO! Bienvenido a la tripulación.</span>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/52189561.js"></script>
   <!-- End of HubSpot Embed Code -->
